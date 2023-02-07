@@ -1,0 +1,32 @@
+{
+  "name": "devtoolchainexample",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "web-dev-server --node-resolve --open --watch",
+    "build": "rollup --config",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxwellJamesUW/devToolchainExample.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxwellJamesUW/devToolchainExample/issues"
+  },
+  "homepage": "https://github.com/MaxwellJamesUW/devToolchainExample#readme",
+  "dependencies": {
+    "three": "^0.149.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@web/dev-server": "^0.1.35",
+    "gh-pages": "^5.0.0",
+    "rollup": "^2.79.1",
+    "rollup-plugin-copy": "^3.4.0"
+  }
+}
