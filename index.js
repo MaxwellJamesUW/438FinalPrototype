@@ -1,4 +1,4 @@
-import {
+/*import {
     BoxGeometry,
     Mesh,
     MeshPhongMaterial,
@@ -6,8 +6,10 @@ import {
     Scene,
     WebGLRenderer,
     DirectionalLight,
-  } from "three";
+  } from "three"; */
   
+  
+  /*
   // Create our scene
   const scene = new Scene();
   
@@ -50,3 +52,45 @@ import {
   
   // Start the animation loop
   animate();
+  */
+  let ball, floor, lwall, rwall;
+  let cW, cH;
+
+  window.setup = () => {
+    cW = 500;
+    cH = 600;
+    new Canvas(cW, cH);
+    world.gravity.y = 10;
+  
+    ball = new Sprite();
+    ball.diameter = 50;
+    ball.y =  cH - 60;
+    ball.bounciness = 0.7;
+  
+    floor = new Sprite();
+    floor.y = cH-5;
+    floor.w = cW;
+    floor.h = 10;
+    floor.collider = 'static';
+
+    lwall = new Sprite();
+    lwall.y = cH/2;
+    lwall.x = 5;
+    lwall.w = 10;
+    lwall.h = cH;
+    lwall.collider = 'static';
+
+    rwall = new Sprite();
+    rwall.y = cH/2;
+    rwall.x = cW - 5;
+    rwall.w = 10;
+    rwall.h = cH;
+    rwall.collider = 'static';
+  }
+  
+  window.draw = () => {
+    clear();
+    if(mouse.presses()) {
+      ball.moveTo(mouse, 8);
+    }
+  }
