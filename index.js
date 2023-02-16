@@ -28,10 +28,11 @@ window.setup = () => {
   world.gravity.y = 10;
 
   ball = new Sprite();
+  //ball.img = "theBall.png";
   ball.diameter = 50;
   ball.y =  cH - 60;
   ball.bounciness = 0.7;
-
+  
   floor = new Sprite();
   floor.y = cH-5;
   floor.w = cW;
@@ -67,6 +68,7 @@ window.draw = () => {
   if(mouse.pressing()) {
     line(clickx1, clicky1, mouse.x, mouse.y);
   }
+  
   //score condition
   if((ball.colliding(hoopl) > 60) && (ball.colliding(hoopr) > 60)){
     ball.y = cH - 60;
@@ -76,7 +78,7 @@ window.draw = () => {
     hoopr.remove();
     newHoop();
   }
-
+  
   textSize(40);
   text('Score: ' + score, 20, 50);
   text('Shots: ' + shots, 20, 90);
