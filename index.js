@@ -9,56 +9,21 @@
   } from "three"; */
   
   
-  /*
-  // Create our scene
-  const scene = new Scene();
+  import "p5.play";
+  import "p5js";
   
-  // Create the camera so we can see our scene
-  const camera = new PerspectiveCamera(
-    75,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
-  
-  // Create our renderer and add it to the DOM
-  const renderer = new WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-  
-  // Create our cube mesh from  a geometry and a material and add it to the scene
-  const geometry = new BoxGeometry(1, 1, 1);
-  const material = new MeshPhongMaterial({ color: 0x00ff00 });
-  const cube = new Mesh(geometry, material);
-  scene.add(cube);
-  
-  // Add a directional light so we can see shadows on the cube
-  const color = 0xffffff;
-  const intensity = 1;
-  const light = new DirectionalLight(color, intensity);
-  light.position.set(-1, 2, 4);
-  scene.add(light);
-  
-  // Position the camera
-  camera.position.z = 5;
-  
-  // The animation loop updates the cube's rotation
-  function animate() {
-    requestAnimationFrame(animate);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    renderer.render(scene, camera);
-  }
-  
-  // Start the animation loop
-  animate();
-  */
-  let ball, floor, lwall, rwall;
+ 
+  let ball, floor, lwall, rwall, top;
   let cW, cH;
+  let clickx1, clicky1, clickx2, clicky2;
+  let powerbar;
+  let velCalmer = 20;
+  let shots = 0;
+  let score = 0;
 
   window.setup = () => {
-    cW = 500;
-    cH = 600;
+    cW = windowWidth;
+    cH = windowHeight;
     new Canvas(cW, cH);
     world.gravity.y = 10;
   
@@ -86,11 +51,33 @@
     rwall.w = 10;
     rwall.h = cH;
     rwall.collider = 'static';
+
+    top = new Sprite();
+    top.y = 5;
+    top.h = 10;
+    top.x = cW/2;
+    top.w = cW;
+    top.collider = 'static';
+
   }
   
   window.draw = () => {
     clear();
-    if(mouse.presses()) {
-      ball.moveTo(mouse, 8);
+    if(mouse.pressing()) {
+      line(clickx1, clicky1, mouse.x, mouse.y);
     }
   }
+
+  window.onmousedown = () => {
+    clickx1 = mouse.x;
+    clicky1 = mouse.y;
+  }
+  
+  window.onmouseup = () => {
+    clickx2 = mouse.x;
+    clicky2 = mouse.y;
+    ball.vel.x += (clickx1 - clickx2) / velCalmer;
+    ball.vel.y += (clicky1 - clicky2) / velCalmer;
+    shots += 1;
+  }
+  
