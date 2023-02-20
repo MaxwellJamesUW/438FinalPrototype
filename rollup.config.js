@@ -8,7 +8,8 @@ module.exports = {
   },
   plugins: [
     copy({
-      targets: [{ src: "index.html", dest: "dist" }],
+      targets: [{ src: "index.html", dest: "dist" }, { src: "theBall.png", dest: "dist" }, 
+        { src: "ball2.png", dest: "dist" }, { src: "ball3.png", dest: "dist" }],
     }),
     nodeResolve(),
   ],
