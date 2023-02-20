@@ -8,18 +8,21 @@
     DirectionalLight,
   } from "three"; */
   
-  /*
-  import "p5.play";
-  import "p5js";
-  */
  
-let ball, floor, lwall, rwall, top;
+let ball, floor, lwall, rwall, topper;
 let cW, cH;
 let clickx1, clicky1, clickx2, clicky2;
 let hoopl, hoopr;
 let velCalmer = 20;
 let shots = 0;
 let score = 0;
+let ballimg1;
+
+window.preload = () => {
+  ballimg1 = loadImage("ball2.png");
+  ballimg2 = loadImage("theBall.png");
+  ballimg3 = loadImage('ball3.png');
+};
 
 window.setup = () => {
   cW = windowWidth;
@@ -28,10 +31,12 @@ window.setup = () => {
   world.gravity.y = 10;
 
   ball = new Sprite();
-  //ball.img = "theBall.png";
   ball.diameter = 50;
   ball.y =  cH - 60;
   ball.bounciness = 0.7;
+  ball.addAni('distressed', ballimg2);
+  ball.addAni('baseline', ballimg1);
+  ball.addAni('done', ballimg3);
   
   floor = new Sprite();
   floor.y = cH-5;
@@ -53,12 +58,12 @@ window.setup = () => {
   rwall.h = cH;
   rwall.collider = 'static';
 
-  top = new Sprite();
-  top.y = 5;
-  top.h = 10;
-  top.x = cW/2;
-  top.w = cW;
-  top.collider = 'static';
+  topper = new Sprite();
+  topper.y = 5;
+  topper.h = 10;
+  topper.x = cW/2;
+  topper.w = cW;
+  topper.collider = 'static';
 
   newHoop();
 };
@@ -67,10 +72,17 @@ window.draw = () => {
   clear();
   if(mouse.pressing()) {
     line(clickx1, clicky1, mouse.x, mouse.y);
+    ball.changeAni('distressed');
+  } else {
+    ball.changeAni('baseline');
   }
   
+  if((ball.colliding(hoopl) > 5) && (ball.colliding(hoopr) > 5)){
+    ball.changeAni('done');
+  }
+
   //score condition
-  if((ball.colliding(hoopl) > 60) && (ball.colliding(hoopr) > 60)){
+  if((ball.colliding(hoopl) > 50) && (ball.colliding(hoopr) > 50)){
     ball.y = cH - 60;
     ball.x = random(100, cW - 100);
     score += 1;
@@ -80,18 +92,21 @@ window.draw = () => {
   }
   
   textSize(40);
-  text('Score: ' + score, 20, 50);
+  text('Score: ' + score, 20, 55);
+  textSize(32);
   text('Shots: ' + shots, 20, 90);
 };
 
-window.onmousedown = () => {
-  clickx1 = mouse.x;
-  clicky1 = mouse.y;
+//onmousedown
+window.mousePressed = () => {
+  clickx1 = mouseX;
+  clicky1 = mouseY;
 };
 
-window.onmouseup = () => {
-  clickx2 = mouse.x;
-  clicky2 = mouse.y;
+//onmouseup
+window.mouseReleased = () => {
+  clickx2 = mouseX;
+  clicky2 = mouseY;
   ball.vel.x += (clickx1 - clickx2) / velCalmer;
   ball.vel.y += (clicky1 - clicky2) / velCalmer;
   shots += 1;
@@ -99,7 +114,7 @@ window.onmouseup = () => {
 
 function newHoop() {
   let hx = random(100, cW - 100);
-  let hy = random(200, 400);
+  let hy = random(150, 350);
   hoopl = new Sprite(hx, hy, 5, 35);
   hoopl.rotation = -15;
   hoopl.collider = 'static';
