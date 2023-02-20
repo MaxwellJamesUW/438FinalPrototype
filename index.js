@@ -124,7 +124,3 @@ function newHoop() {
   hoopr.collider = 'static';
 
 }
-
-function doEnd() {
-  
-}
