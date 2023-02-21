@@ -98,7 +98,7 @@ window.draw = () => {
     hoopr.remove();
     newHoop();
   }
-  
+  textAlign(LEFT);
   textSize(40);
   text('Score: ' + score, 20, 55);
   textSize(32);
@@ -108,11 +108,12 @@ window.draw = () => {
 
   //end condition!
   if (secs >= 60){
+    textAlign(CENTER);
     textSize(44);
     if (fscore === 1){
       text('You scored just ' + fscore + " basket\n in 60 seconds!", cW/2, cH/2);
     } else {
-      text('You scored ' + fscore + " baskets\n in 60 seconds!", cW/5, cH/2);
+      text('You scored ' + fscore + " baskets\n in 60 seconds!", cW/2, cH/2);
     }
   } else {
     textSize(32);
