@@ -16,6 +16,7 @@ let hoopl, hoopr;
 let velCalmer = 20;
 let shots = 0;
 let score = 0;
+let fscore = 0;
 let ballimg1;
 
 window.preload = () => {
@@ -70,6 +71,10 @@ window.setup = () => {
 
 window.draw = () => {
   clear();
+
+  let secs = millis() / 1000;
+  secs = int(secs);
+
   if(mouse.pressing()) {
     line(clickx1, clicky1, mouse.x, mouse.y);
     ball.changeAni('distressed');
@@ -86,6 +91,9 @@ window.draw = () => {
     ball.y = cH - 60;
     ball.x = random(100, cW - 100);
     score += 1;
+    if (secs < 60){
+      fscore += 1;
+    }
     hoopl.remove();
     hoopr.remove();
     newHoop();
@@ -96,15 +104,15 @@ window.draw = () => {
   textSize(32);
   text('Shots: ' + shots, 20, 90);
 
-  let secs = millis() / 1000;
-  secs = int(secs);
+  
 
+  //end condition!
   if (secs >= 60){
     textSize(44);
-    if (score === 1){
-      text('You scored just ' + score + " basket\n in 60 seconds!", cW/2, cH/2);
+    if (fscore === 1){
+      text('You scored just ' + fscore + " basket\n in 60 seconds!", cW/2, cH/2);
     } else {
-      text('You scored ' + score + " baskets\n in 60 seconds!", cW/5, cH/2);
+      text('You scored ' + fscore + " baskets\n in 60 seconds!", cW/5, cH/2);
     }
   } else {
     textSize(32);
