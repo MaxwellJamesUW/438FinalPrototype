@@ -95,6 +95,21 @@ window.draw = () => {
   text('Score: ' + score, 20, 55);
   textSize(32);
   text('Shots: ' + shots, 20, 90);
+
+  let secs = millis() / 1000;
+  secs = int(secs);
+
+  if (secs >= 60){
+    textSize(44);
+    if (score === 1){
+      text('You scored just ' + score + " basket\n in 60 seconds!", cW/2, cH/2);
+    } else {
+      text('You scored ' + score + " baskets\n in 60 seconds!", cW/5, cH/2);
+    }
+  } else {
+    textSize(32);
+    text('Time left: ' + (60 - secs), cW - 200, 55);
+  }
 };
 
 //onmousedown
